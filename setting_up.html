@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Deployment</title>
+        <title>Setting up Environment</title>
 
 
         <!-- Custom HTML head -->
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> API</a></li><li class="chapter-item expanded "><a href="deployment.html" class="active"><strong aria-hidden="true">2.</strong> Deployment</a></li><li class="chapter-item expanded "><a href="setting_up.html"><strong aria-hidden="true">3.</strong> Setting up Environment</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> API</a></li><li class="chapter-item expanded "><a href="deployment.html"><strong aria-hidden="true">2.</strong> Deployment</a></li><li class="chapter-item expanded "><a href="setting_up.html" class="active"><strong aria-hidden="true">3.</strong> Setting up Environment</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -144,85 +144,71 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="deployment"><a class="header" href="#deployment">Deployment</a></h1>
-<h2 id="1-creating-an-account"><a class="header" href="#1-creating-an-account">1. Creating an account:</a></h2>
-<p>In order to use the API from anywhere on any machine, one would need to deploy the API to a hosting service. The hosting service we picked is <a href="https://render.com">render</a>. </p>
-<p>(if an account has not already been created) When signing up for an account, make sure to do so using the GitHub account which owns the repository containing the code you'd like to deploy. This is to make it convenient for quickly selecting repositories on your GitHub account direcly from within <a href="https://render.com">render</a>.</p>
-<h2 id="2-creating-a-new-service"><a class="header" href="#2-creating-a-new-service">2. Creating a new service:</a></h2>
+                        <h1 id="setting-up-development-environment"><a class="header" href="#setting-up-development-environment">Setting Up Development Environment</a></h1>
+<p>To set up development environment you need to do the following:</p>
 <ol>
-<li>After logging in, click the 'new +' button near the profile icon and select webservice. Selecting webservice allows us to deploy applications that will be serving data to its users. Please check out the <a href="https://render.com/docs/web-services">Web Services documentation</a> on render.</li>
-</ol>
-<p><img src="https://user-images.githubusercontent.com/97417536/227998672-545b6d4c-d7a5-4f14-b137-43d182c32331.png" alt="image" /></p>
-<ol start="2">
-<li>Select the GitHub repository containing the code you'd like to deploy. In this case, it will be <code>cool-corridors-API</code></li>
-</ol>
-<p><img src="https://user-images.githubusercontent.com/97417536/228000965-951b5bcb-3af5-420a-a80e-abf0fc992b9d.png" alt="image" /></p>
-<ol start="3">
-<li>You will now be greeted with this menu to fill out:</li>
-</ol>
-<p><img src="https://user-images.githubusercontent.com/97417536/228002777-a42f487c-812e-4986-a030-c91679dfcb48.png" alt="image" /></p>
-<p>Here's what each field mean, feel free to also checkout the <a href="https://render.com/docs/web-services#deploy-your-own-code">documentation</a>:</p>
-<ul>
-<li><code>Name</code>: A name for your Web Service</li>
-<li><code>Runtime</code>: The programming language of your code, which is Python. </li>
-<li><code>Region</code>: The <a href="https://render.com/docs/regions">geographic region</a> to deploy to</li>
-<li><code>Branch</code>: The git branch to build. At the moment, the branch used is <code>gunicorn-testing</code></li>
-<li><code>Root directory</code>: The directory which the application is ran from. Keep this as default because the root directory contains a file named <code>run.py</code> which is responsble for running the code in <code>/src</code></li>
-<li><code>Build Command</code>: The command to build your Web Service. Because all the API dependencies of the project are in <code>requirements.txt</code>, set this field to <code>pip install -r requirements.txt</code>. If new packages/dependencies are later on added to the project, run <code>pip freeze &gt; requirements.txt</code> within the project root directory to get an up to date <code>requirements.txt</code> file.</li>
-<li><code>Start Command</code>: The command to start your Web Service. The command is <code>gunicorn run:app</code> where <code>app.py</code> is in the root directory of the repository. We decided to use <a href="https://gunicorn.org/">gunicorn</a> because it can make the application handle more requests per second. More on this is elaborated below. </li>
-</ul>
-<h3 id="why-use-gunicorn"><a class="header" href="#why-use-gunicorn">Why use gunicorn?</a></h3>
-<p>Flask is a light weight framework great for developing applications locally on your machine. However, flask on its own can only handle one request at a time in sequential order, making it less ideal for deployment into production. </p>
-<p>Turns out that its best practice to run flask code using <a href="https://gunicorn.org/">gunicorn</a>. 
-This is because gunicorn uses a <a href="https://docs.gunicorn.org/en/stable/design.html">pre-fork model</a> which has 
-multiple processes called &quot;workers&quot; that can indidivually handle API requests. These processes are handled by a &quot;Master Process&quot; that manages the number of running workers based on how many API requests are made at a given time. 
-The result is that we have a faster application that can handle multiple requests at the same time as opposed to just one at a time. </p>
-<p><a href="https://blog.ironboundsoftware.com/2016/06/27/faster-flask-need-gunicorn/">article</a></p>
-<h2 id="plan"><a class="header" href="#plan">Plan</a></h2>
-<p>Scrolling further down from <code>Start Command</code>, you can select the plan to host the API with. You can specify the amount of RAM and how many CPUs your Web Service requires. We selected the free plan for now, but higher tiers can handle more traffic load.</p>
-<p><img src="https://user-images.githubusercontent.com/97417536/228021569-ada52763-f00f-4b4f-a22c-e9549d925dae.png" alt="image" /></p>
-<h2 id="advanced"><a class="header" href="#advanced">Advanced:</a></h2>
-<p>Within <code>Advanced</code>, you may also specify environment variables, secrets, persistent disk, health check path, and whether or not to auto deploy on every git push.</p>
-<p><img src="https://user-images.githubusercontent.com/97417536/228029117-93da1d34-41e4-4569-9381-fea5f443030a.png" alt="image" /></p>
-<p>For this section, we need to do two things:</p>
-<ol>
-<li>Add an environment variable to specifiy the Python version for render to use for deployment. </li>
-</ol>
-<pre><code>Key: PYTHON_VERSION
-Value: 3.9.10
-</code></pre>
-<p><img src="https://user-images.githubusercontent.com/97417536/228029988-7ef15efa-2c03-4915-b5ac-45c082ccdc8f.png" alt="image" /></p>
-<ol start="2">
-<li>Add a <code>.env</code> file containing PurpleAir API read and write keys. Conventionally, <code>.env</code> is added to the <code>.gitignore</code> of project repositories in order to keep senstitive information needed to run the API hidden and safe. However, there's no way for render to have access for this file unless we explicitly specify it here:</li>
-</ol>
-<p><img src="https://user-images.githubusercontent.com/97417536/228032291-aa7e0043-bc7d-49a2-8ece-4b59b76d33bb.png" alt="image" /></p>
-<ul>
 <li>
-<p>Filename: <code>.env</code></p>
-</li>
-<li>
-<p>contents: </p>
-<pre><code class="language-ini">Make sure to have the keys enclosed in quotiation marks
-
-READ_KEY = &quot;INSERT_READ_KEY_HERE&quot;
-WRITE_KEY = &quot;INSERT_WRITE_KEY_HERE&quot;
+<p>Clone the Reposository</p>
+<pre><code class="language-bash">git clone https://github.com/Cool-Corridors/cool-corridors-API.git
 </code></pre>
 </li>
+<li>
+<p>Set up anaconda virtual environment and activate it:</p>
+<pre><code class="language-bash">pip -m venv IQS
+</code></pre>
+<pre><code class="language-bash">source IQS/bin/activate
+</code></pre>
+</li>
+<li>
+<p>After activating the environment, install the following packages:</p>
+<pre><code class="language-bash">pip install flask
+pip install python-dotenv
+pip install geocoder
+</code></pre>
+</li>
+<li>
+<p>Install the following packages:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+</code></pre>
+</li>
+<li>
+<p>set up a <code>.env</code> file with the appropriate API keys:</p>
+<blockquote>
+<p>To be able to fetch data from the <a href="https://api.purpleair.com/">PurpleAir API</a>, you need to first <a href="https://community.purpleair.com/t/how-to-obtain-an-api-key/1238">contact</a> their team by <a href="contact@purpleair.com">email</a> to obtain read and write API keys.</p>
+</blockquote>
+<p>Once the keys are obtained, set up your environment variables file</p>
+<pre><code class="language-bash">cp .env.example .env
+</code></pre>
+<p>How <code>.env</code> will look:</p>
+<pre><code class="language-init">READ_KEY=
+WRITE_KEY=
+</code></pre>
+<p>and then paste the API keys into the corresponding fields.</p>
+</li>
+<li>
+<p>Run the app:</p>
+<pre><code class="language-bash">gunicorn run:app
+</code></pre>
+</li>
+</ol>
+<h2 id="notes"><a class="header" href="#notes">Notes:</a></h2>
+<ul>
+<li>
+<p>We use gunicorn to run the app because that is what our deployment uses. As such, you need to be on linux to actually run this app locally on your machine. If you are on windows, consider looking into <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a> or <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package">WSL2</a>.</p>
+</li>
+<li>
+<p>We use pip instead of conda (for now) because of the <code>requirements.txt</code> file. We need this to deploy and conda does not support this. </p>
+</li>
 </ul>
-<p><strong>Once all of this has been set, click the Create Web Service button all the way at the bottom:</strong></p>
-<p><img src="https://user-images.githubusercontent.com/97417536/228036086-da582277-8da2-4405-983d-41f64e7298f6.png" alt="image" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="introduction.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="deployment.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="setting_up.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -230,13 +216,10 @@ WRITE_KEY = &quot;INSERT_WRITE_KEY_HERE&quot;
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="introduction.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="deployment.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="setting_up.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
             </nav>
 
         </div>

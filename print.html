@@ -84,7 +84,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> API</a></li><li class="chapter-item expanded "><a href="deployment.html"><strong aria-hidden="true">2.</strong> Deployment</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> API</a></li><li class="chapter-item expanded "><a href="deployment.html"><strong aria-hidden="true">2.</strong> Deployment</a></li><li class="chapter-item expanded "><a href="setting_up.html"><strong aria-hidden="true">3.</strong> Setting up Environment</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -433,6 +433,62 @@ WRITE_KEY = &quot;INSERT_WRITE_KEY_HERE&quot;
 </ul>
 <p><strong>Once all of this has been set, click the Create Web Service button all the way at the bottom:</strong></p>
 <p><img src="https://user-images.githubusercontent.com/97417536/228036086-da582277-8da2-4405-983d-41f64e7298f6.png" alt="image" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="setting-up-development-environment"><a class="header" href="#setting-up-development-environment">Setting Up Development Environment</a></h1>
+<p>To set up development environment you need to do the following:</p>
+<ol>
+<li>
+<p>Clone the Reposository</p>
+<pre><code class="language-bash">git clone https://github.com/Cool-Corridors/cool-corridors-API.git
+</code></pre>
+</li>
+<li>
+<p>Set up anaconda virtual environment and activate it:</p>
+<pre><code class="language-bash">pip -m venv IQS
+</code></pre>
+<pre><code class="language-bash">source IQS/bin/activate
+</code></pre>
+</li>
+<li>
+<p>After activating the environment, install the following packages:</p>
+<pre><code class="language-bash">pip install flask
+pip install python-dotenv
+pip install geocoder
+</code></pre>
+</li>
+<li>
+<p>Install the following packages:</p>
+<pre><code class="language-bash">pip install -r requirements.txt
+</code></pre>
+</li>
+<li>
+<p>set up a <code>.env</code> file with the appropriate API keys:</p>
+<blockquote>
+<p>To be able to fetch data from the <a href="https://api.purpleair.com/">PurpleAir API</a>, you need to first <a href="https://community.purpleair.com/t/how-to-obtain-an-api-key/1238">contact</a> their team by <a href="contact@purpleair.com">email</a> to obtain read and write API keys.</p>
+</blockquote>
+<p>Once the keys are obtained, set up your environment variables file</p>
+<pre><code class="language-bash">cp .env.example .env
+</code></pre>
+<p>How <code>.env</code> will look:</p>
+<pre><code class="language-init">READ_KEY=
+WRITE_KEY=
+</code></pre>
+<p>and then paste the API keys into the corresponding fields.</p>
+</li>
+<li>
+<p>Run the app:</p>
+<pre><code class="language-bash">gunicorn run:app
+</code></pre>
+</li>
+</ol>
+<h2 id="notes"><a class="header" href="#notes">Notes:</a></h2>
+<ul>
+<li>
+<p>We use gunicorn to run the app because that is what our deployment uses. As such, you need to be on linux to actually run this app locally on your machine. If you are on windows, consider looking into <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">WSL</a> or <a href="https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package">WSL2</a>.</p>
+</li>
+<li>
+<p>We use pip instead of conda (for now) because of the <code>requirements.txt</code> file. We need this to deploy and conda does not support this. </p>
+</li>
+</ul>
 
                     </main>
 
@@ -451,22 +507,6 @@ WRITE_KEY = &quot;INSERT_WRITE_KEY_HERE&quot;
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
