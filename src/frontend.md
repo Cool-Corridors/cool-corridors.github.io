@@ -2,7 +2,7 @@
 
 Short Demo of up to date functionality:
 
-https://user-images.githubusercontent.com/97417536/223229967-11e12cef-dae1-4c03-adb7-8d4cd798c06f.mov
+[Demo](https://user-images.githubusercontent.com/97417536/223229967-11e12cef-dae1-4c03-adb7-8d4cd798c06f.mov)
 
 Currently, the layout of the frontend is made up of 3 components within the `./frontend/template` directory:
 

@@ -5,3 +5,4 @@
 - [Deployment](./deployment.md)
 - [API](./api.md)
     - [Endpoints](./endpoints.md)
+- [Web UI](./frontend.md)
