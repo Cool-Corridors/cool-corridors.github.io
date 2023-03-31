@@ -18,6 +18,11 @@ Once Rust is installed, install the mdbook cli:
 cargo install mdbook
 ```
 
+To uninstall rust
+```
+rustup self uninstall
+```
+
 You can now host the files locally using the following command:
 
 ```bash
