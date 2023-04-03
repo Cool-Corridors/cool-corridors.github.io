@@ -11,7 +11,6 @@
 - [Client](./client.md)
     - [/](./client-routes/home-route.md)
     - [/search](./client-routes/search.md)
-    - [/search-results](./client-routes/search-results.md)
     - [/about](./client-routes/about.md)
 # Support
 - [Accessing repositories](./support/acessing.md)
