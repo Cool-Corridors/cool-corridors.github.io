@@ -8,7 +8,7 @@
         - [/score](./endpoints/endpoint-score.md)
         - [/descriptor](./endpoints/endpoint-descriptor.md)
         - [/color](./endpoints/endpoint-color.md)
-- [Client](./frontend.md)
+- [Client](./client.md)
     - [/](./client-routes/home-route.md)
     - [/search](./client-routes/search.md)
     - [/search-results](./client-routes/search-results.md)

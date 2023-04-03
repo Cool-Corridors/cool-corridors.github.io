@@ -29,7 +29,7 @@ Short Demo of up to date functionality (click the link if viewing the page throu
         └── search.jinja
 ```
 
-Currently, the layout of the frontend is made up of 3 components within the `./frontend/template` directory:
+Currently, the layout of the frontend is made up of 4 components within the `./src/template` directory:
 
 - `layout.jinja`: defines the overall structure of the UI. It is made up of 3 sections (navigation bar, the main content, and a footer).
 - `search.jinja`: search bar component. It sends an HTTP post request containing the user input (zipcode) to the ``/data`` endpoint
