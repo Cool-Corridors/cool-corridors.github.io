@@ -13,6 +13,7 @@ If you are a RapidAPI user, you can use the following url to access the API: [ht
 
 RapidAPI provides a gateway url that allows users to acces the API from within RapidAPI's website. 
 
-### Github
+### GitHub
 - [Organization](https://github.com/Cool-Corridors)
-- [github.io repo](https://github.com/Cool-Corridors/cool-corridors.github.io)
+- [Repository for this Website](https://github.com/Cool-Corridors/cool-corridors.github.io)
+
