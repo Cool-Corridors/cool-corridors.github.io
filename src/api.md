@@ -1,7 +1,21 @@
 # API
 
-The API is hosted by [render.com](https://render.com/). The base url is [here](https://cool-corridors-api-service.onrender.com). All other endpoints are relative to this url.
+The API is hosted by [render.com](https://render.com/). The base url is [here](https://cool-corridors-api-service.onrender.com). All other endpoints are relative to this url. The GitHub link for the API is [here](https://github.com/Cool-Corridors/cool-corridors-API).
 
+## Folder Structure
+```bash
+.
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── run.py
+└── src
+    ├── app.py
+    ├── helpers.py
+    ├── __init__.py
+    ├── zip_lat_long.csv
+    └── zip_lat_long.json
+```
 ## Data
 
 PurpleAir returns their data as a json object formatted as such:
