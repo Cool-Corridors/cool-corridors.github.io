@@ -1,0 +1,735 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cool Corridors Documentation</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Documentation for the Cool Corridors project">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">Setting up</li><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="api.html"><strong aria-hidden="true">2.</strong> API</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="endpoints.html"><strong aria-hidden="true">2.1.</strong> Endpoints</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="endpoints/endpoint-data.html"><strong aria-hidden="true">2.1.1.</strong> /data</a></li><li class="chapter-item expanded "><a href="endpoints/endpoint-score.html"><strong aria-hidden="true">2.1.2.</strong> /score</a></li><li class="chapter-item expanded "><a href="endpoints/endpoint-descriptor.html"><strong aria-hidden="true">2.1.3.</strong> /descriptor</a></li><li class="chapter-item expanded "><a href="endpoints/endpoint-color.html"><strong aria-hidden="true">2.1.4.</strong> /color</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="client.html"><strong aria-hidden="true">3.</strong> Client</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="client-routes/home-route.html"><strong aria-hidden="true">3.1.</strong> /</a></li><li class="chapter-item expanded "><a href="client-routes/search.html"><strong aria-hidden="true">3.2.</strong> /search</a></li><li class="chapter-item expanded "><a href="client-routes/about.html"><strong aria-hidden="true">3.3.</strong> /about</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Support</li><li class="chapter-item expanded "><a href="support/acessing.html"><strong aria-hidden="true">4.</strong> Accessing repositories</a></li><li class="chapter-item expanded "><a href="support/new_route.html"><strong aria-hidden="true">5.</strong> Creating a new API endpoint</a></li><li class="chapter-item expanded "><a href="support/helper_functions.html"><strong aria-hidden="true">6.</strong> Helper functions</a></li><li class="chapter-item expanded "><a href="deployment.html"><strong aria-hidden="true">7.</strong> Deployment</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cool Corridors Documentation</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="cool-corridors-api"><a class="header" href="#cool-corridors-api">Cool Corridors API</a></h1>
+<p>Welcome to the Cool Corridors API! </p>
+<p>This project aims to inform NYC communities of Air Quality in their neighborhoods
+using our very own IAQI score!</p>
+<h2 id="links"><a class="header" href="#links">Links</a></h2>
+<h3 id="rapidapi"><a class="header" href="#rapidapi">RapidAPI</a></h3>
+<p>If you are a RapidAPI user, you can use the following url to access the API: <a href="https://coolcorridors.p.rapidapi.com">https://coolcorridors.p.rapidapi.com</a>.</p>
+<p>RapidAPI provides a gateway url that allows users to acces the API from within RapidAPI's website. </p>
+<h3 id="github"><a class="header" href="#github">GitHub</a></h3>
+<ul>
+<li><a href="https://github.com/Cool-Corridors">Organization</a></li>
+<li><a href="https://github.com/Cool-Corridors/cool-corridors.github.io">Repository for this Website</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="api"><a class="header" href="#api">API</a></h1>
+<p>The API is hosted by <a href="https://render.com/">render.com</a>. The base url is <a href="https://cool-corridors-api-service.onrender.com">here</a>. All other endpoints are relative to this url. The GitHub link for the API is <a href="https://github.com/Cool-Corridors/cool-corridors-API">here</a>.</p>
+<h2 id="folder-structure"><a class="header" href="#folder-structure">Folder Structure</a></h2>
+<pre><code class="language-bash">.
+├── LICENSE
+├── README.md
+├── requirements.txt
+├── run.py
+└── src
+    ├── app.py
+    ├── helpers.py
+    ├── __init__.py
+    ├── zip_lat_long.csv
+    └── zip_lat_long.json
+</code></pre>
+<h2 id="data"><a class="header" href="#data">Data</a></h2>
+<p>PurpleAir returns their data as a json object formatted as such:</p>
+<pre><code class="language-json">{
+    // metadata
+    &quot;fields&quot;: [
+        &quot;name&quot;,
+        &quot;location&quot;,
+        &quot;pm2.5&quot;,
+        &quot;temperature&quot;,
+        ...
+    ],
+    &quot;location_types&quot;: [
+        &quot;outside&quot;,
+        &quot;inside&quot;
+    ],
+    // data is a list of lists. each list/array in data is the data for a certain sensor
+    &quot;data&quot;: [
+        [
+            1284751,
+            &quot;City College&quot;,
+            56,
+            ...
+        ],
+        ...
+    ]
+
+}
+
+</code></pre>
+<p>The <code>/score</code> endpoint will take the above json and format it into the following python dictionary:</p>
+<pre><code class="language-py">    {
+        &quot;zip_code&quot;: int,
+        &quot;pm2.5&quot;: float,
+        &quot;pm2.5_30minute&quot;: float,
+        &quot;pm2.5_60minute&quot;: float,
+        &quot;pm2.5_1week&quot;: float,
+        &quot;temperature&quot;: int,
+        &quot;IAQI&quot;: dict{
+            &quot;score&quot;: int,
+            &quot;category&quot;: str
+            }
+    }
+</code></pre>
+<p>The frontend will then take this json object and embed data into components in the HTML. Data is subject to change as we add different functionalities.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="endpoints"><a class="header" href="#endpoints">Endpoints</a></h1>
+<p>There are currently 4 endpoints in the API. They are documented here with their expected values and reponse.</p>
+<p>All endpoints return the zipcode they were pinged with.</p>
+<p>The <a href="./endpoints/endpoint-data.html"><code>/data</code></a> endpoint returns a json object containing information about temperature, PM2.5 scores, the IAQI score, a description of the score and the color (for frontend visualizations).</p>
+<p>The <a href="./endpoints/endpoint-score.html"><code>/score</code></a> endpoint returns a json object of the IAQI score.</p>
+<p>The <a href="./endpoints/endpoint-color.html"><code>/color</code></a> endpoint returns a json object of the color that we determined for that zipcode.</p>
+<p>The <a href="./endpoints/endpoint-descriptor.html"><code>/descriptor</code></a> endpoint returns a json object of the description text for that zipcode.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="get-data"><a class="header" href="#get-data">GET /data</a></h1>
+<h2 id="parameters"><a class="header" href="#parameters">Parameters</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>type</th><th>data type</th><th>description</th></tr></thead><tbody>
+<tr><td>zipcode</td><td>required</td><td>int</td><td>zipcode of user's location</td></tr>
+<tr><td>api_key</td><td>required</td><td>string</td><td>user's purpleair API key</td></tr>
+</tbody></table>
+</div>
+<h2 id="responses"><a class="header" href="#responses">Responses</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>http code</th><th>content-type</th><th>response</th></tr></thead><tbody>
+<tr><td><code>200</code></td><td><code>application/json</code></td><td><code>JSON object</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{error: &quot;Invalid zipcode&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No sensors found within the range of &quot;x&quot; miles.&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No read key or zipcode provided.&quot;}</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="example-response"><a class="header" href="#example-response">Example response</a></h2>
+<pre><code class="language-py">   {
+       &quot;zip_code&quot;: 11101,
+       &quot;pm2.5&quot;: 2.4,
+       &quot;pm2.5_30minute&quot;: 2.4,
+       &quot;pm2.5_60minute&quot;: 2.6,
+       &quot;pm2.5_1week&quot;: 3.4,
+       &quot;temperature&quot;: 52,
+       &quot;IAQI&quot;: {
+           &quot;score&quot;: 105,
+           &quot;descriptor&quot;: &quot;Good&quot;
+          }
+   }
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="get-score"><a class="header" href="#get-score">GET /score</a></h1>
+<h2 id="parameters-1"><a class="header" href="#parameters-1">Parameters</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>type</th><th>data type</th><th>description</th></tr></thead><tbody>
+<tr><td>zipcode</td><td>required</td><td>int</td><td>zipcode of user's location</td></tr>
+<tr><td>api_key</td><td>required</td><td>string</td><td>user's purpleair API key</td></tr>
+</tbody></table>
+</div>
+<h2 id="responses-1"><a class="header" href="#responses-1">Responses</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>http code</th><th>content-type</th><th>response</th></tr></thead><tbody>
+<tr><td><code>200</code></td><td><code>application/json</code></td><td><code>JSON object</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{error: &quot;Invalid zipcode&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No sensors found within the range of &quot;x&quot; miles.&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No read key or zipcode provided.&quot;}</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="example-response-1"><a class="header" href="#example-response-1">Example response</a></h2>
+<pre><code class="language-py">   {
+       &quot;IAQI&quot;: 105,
+       &quot;zipcode&quot;: 11101
+   }
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="get-descriptor"><a class="header" href="#get-descriptor">GET /descriptor</a></h1>
+<h2 id="parameters-2"><a class="header" href="#parameters-2">Parameters</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>type</th><th>data type</th><th>description</th></tr></thead><tbody>
+<tr><td>zipcode</td><td>required</td><td>int</td><td>zipcode of user's location</td></tr>
+<tr><td>api_key</td><td>required</td><td>string</td><td>user's purpleair API key</td></tr>
+</tbody></table>
+</div>
+<h2 id="responses-2"><a class="header" href="#responses-2">Responses</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>http code</th><th>content-type</th><th>response</th></tr></thead><tbody>
+<tr><td><code>200</code></td><td><code>application/json</code></td><td><code>JSON object</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{error: &quot;Invalid zipcode&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No sensors found within the range of &quot;x&quot; miles.&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No read key or zipcode provided.&quot;}</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="example-response-2"><a class="header" href="#example-response-2">Example response</a></h2>
+<pre><code class="language-py">   {
+       &quot;description&quot;: &quot;Good&quot;,
+       &quot;zipcode&quot;: 11101
+   }
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="get-color"><a class="header" href="#get-color">GET /color</a></h1>
+<h2 id="parameters-3"><a class="header" href="#parameters-3">Parameters</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>name</th><th>type</th><th>data type</th><th>description</th></tr></thead><tbody>
+<tr><td>zipcode</td><td>required</td><td>int</td><td>zipcode of user's location</td></tr>
+<tr><td>api_key</td><td>required</td><td>string</td><td>user's purpleair API key</td></tr>
+</tbody></table>
+</div>
+<h2 id="responses-3"><a class="header" href="#responses-3">Responses</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>http code</th><th>content-type</th><th>response</th></tr></thead><tbody>
+<tr><td><code>200</code></td><td><code>application/json</code></td><td><code>JSON object</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{error: &quot;Invalid zipcode&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No sensors found within the range of &quot;x&quot; miles.&quot;}</code></td></tr>
+<tr><td><code>400</code></td><td><code>application/json</code></td><td><code>{&quot;error&quot;: &quot;No read key or zipcode provided.&quot;}</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="example-response-3"><a class="header" href="#example-response-3">Example response</a></h2>
+<pre><code class="language-py">   {
+       &quot;color&quot;: &quot;0xFF00FF&quot;,
+       &quot;zipcode&quot;: 11101
+   }
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="client"><a class="header" href="#client">Client</a></h1>
+<p>Short Demo of up to date functionality (click the link if viewing the page through rust's mdbook):</p>
+<p><a href="https://user-images.githubusercontent.com/97417536/229569786-ca22e358-f6a0-415a-a39c-e24476110a04.mov">Coolcorridors Prototype Demo</a></p>
+<h2 id="folder-structure-1"><a class="header" href="#folder-structure-1">Folder Structure</a></h2>
+<pre><code class="language-bash">.
+├── README.md
+├── requirements.txt
+└── src
+    ├── app.py
+    ├── formatdata.py
+    ├── requirements.txt
+    ├── static
+    │   ├── css
+    │   │   ├── about.css
+    │   │   ├── search-results.css
+    │   │   ├── search.css
+    │   │   └── style.css
+    │   └── images
+    │       └── Logo_IQSpatialLogo.png
+    └── templates
+        ├── about.jinja
+        ├── layout.jinja
+        ├── search-results.jinja
+        └── search.jinja
+</code></pre>
+<p>Currently, the layout of the frontend is made up of 4 components within the <code>./src/template</code> directory:</p>
+<ul>
+<li><code>layout.jinja</code>: defines the overall structure of the UI. It is made up of 3 sections (navigation bar, the main content, and a footer).</li>
+<li><code>search.jinja</code>: search bar component. It sends an HTTP post request containing the user input (zipcode) to the <code>/data</code> endpoint</li>
+<li><code>search-results.jinja</code>: search results component. This component receives and displays data from the API call on the <code>/data</code> endpoint.</li>
+<li><code>about.jinja</code> skeleton template set up to populate information on the project and the people behind it.</li>
+</ul>
+<p>The CSS file names in <code>./frontend/static/css</code> define styling rules to the corresponding Jinja components.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="home-route-"><a class="header" href="#home-route-">Home Route (&quot;/&quot;)</a></h1>
+<h2 id="screenshot"><a class="header" href="#screenshot">Screenshot:</a></h2>
+<p><img src="https://user-images.githubusercontent.com/97417536/229579066-f3a7cb57-242c-48bc-a6e8-e662a706b138.png" alt="home route" /></p>
+<p><code>layout.jinja</code>: defines the overall structure of the UI. It is made up of 3 sections (navigation bar, the main content, and a footer). This is not whats getting rendered in the app, but rather it is <code>search.jinja</code> which inherits everything from within <code>layout.jinja</code>. More on this below.</p>
+<p>Here's what the main content of <code>layout.jinja</code> looks like:</p>
+<pre><code class="language-html">
+&lt;body&gt;
+    &lt;header class=&quot;nav-bar&quot;&gt;
+        &lt;div&gt;
+            &lt;a class=&quot;link&quot; href=&quot;/&quot;&gt;&lt;img id = &quot;logo&quot; max-width=&quot;120px&quot; max-height =&quot;30px&quot; src=&quot;.\..\static\images\Logo_IQSpatialLogo.png&quot;/&gt;&lt;/a&gt;
+            &lt;span&gt; &lt;a class=&quot;link&quot; href=&quot;/about&quot;&gt;About&lt;/a&gt;&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/header&gt;
+    
+    {# Search form and search results go here #}
+    &lt;section class=&quot;content&quot;&gt;
+        {% block searchbar %} {% endblock %}
+        {% block about %} {% endblock %}
+    &lt;/section&gt;
+
+    &lt;footer&gt;
+    &lt;/footer&gt;
+    {# Needed for bootstrap components/features that use javascript #}
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js&quot;
+        integrity=&quot;sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN&quot;
+        crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+<p>Some important information to keep in mind:</p>
+<ul>
+<li>
+<p>The navigation bar is contained within the <code>&lt;header&gt;&lt;/header&gt;</code> tag. In there is the IQS Logo, which can be used to navigate back to this route from any other route, as well as the About text to navigate to the about route.</p>
+</li>
+<li>
+<p>The the jinja code within <code>&lt;section&gt;&lt;/section&gt;</code> is what allows this route to be extendable to other routes. Said routes can be specified within the jinja code blocks:</p>
+<pre><code class="language-html">    &lt;section class=&quot;content&quot;&gt;
+        {% block searchbar %} {% endblock %}
+        {% block about %} {% endblock %}
+    &lt;/section&gt;
+</code></pre>
+</li>
+<li>
+<p><code>search.jinja</code> is specified as the jinja file to render in this route (the searchbar component within the jinja block) due to the following code in <code>app.py</code>:</p>
+<pre><code class="language-py">@app.route(&quot;/&quot;)
+def home():
+    # app homepage will default to rendering the search form
+    return render_template(&quot;search.jinja&quot;)
+</code></pre>
+<p><code>search.jinja</code> is able to inherit all the HTML code within <code>layout.jinja</code> due to specifying the following inside it:</p>
+<pre><code class="language-html">
+{% extends &quot;layout.jinja&quot; %}
+{% endblock %}
+</code></pre>
+<blockquote>
+<p>the HTML content we'd like to present from this route is then written between the preoceeding two lines. </p>
+</blockquote>
+</li>
+<li>
+<p>The <code>&lt;footer&gt;&lt;/footer&gt;</code> tag is meant to contain information relating to the project and the people behind it. However, it is empty at the moment.</p>
+</li>
+<li>
+<p>The CSS declarations in <code>static/style.css</code> is applied on to <code>layout.jinja</code> while <code>static/search.css</code> is applied on to <code>search.jinja</code> on this route.</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="search"><a class="header" href="#search">/search</a></h1>
+<p>In this route, API requests are made, and the data recieved gets displayed. Take a look at the following example:</p>
+<p><img src="https://user-images.githubusercontent.com/97417536/229623946-c057ddda-45dc-43fe-9c5a-f65e7a5867eb.png" alt="zipcode search results" /></p>
+<p>When this route is triggered, it renders <code>search-results.jinja</code>, which inherits all HTML within <code>search.jinja</code> (which by extension, also inherits <code>layout.jinja</code>).</p>
+<p>Here's how this is done from within <code>app.py</code>:</p>
+<pre><code class="language-py">LOCAL_API_BASE_URL = &quot;http://localhost:3000/&quot; 
+DEPLOYED_API_BASE_URL = &quot;https://cool-corridors-api-service.onrender.com&quot;
+
+@app.route(&quot;/search&quot;, methods = [&quot;GET&quot;, &quot;POST&quot;])
+def results():
+
+    zipcode = request.form.get(&quot;zipcode&quot;)
+    params = {&quot;zipcode&quot;: zipcode, &quot;read_key&quot;: READ_KEY}
+    
+    # The API base url used depends on which API instance the developer desire to use
+    zipcode_data =  requests.get(f&quot;{DEPLOYED_API_BASE_URL}/data&quot;, params=params).json()
+    
+    if &quot;error&quot; in zipcode_data:
+        zipcode_data = json.loads(zipcode_data)
+        error = True
+        error_data = zipcode_data[&quot;error&quot;]
+        return render_template(&quot;search.jinja&quot;, error = error, error_data = error_data)
+    
+    # use zipcode data and ROW_HEADERS to format the data displayed on the frontend
+    climate_data = format_zipcode_data(zipcode_data)
+
+    return render_template(&quot;search-results.jinja&quot;, climate_data = climate_data, zipcode = zipcode)
+</code></pre>
+<ul>
+<li>When the user inputs their zipcode and presses enter, <code>results()</code> is triggered and in there, an HTTP GET request to the <code>/data</code> endpoint of the API is made. This is seen in the following line: </li>
+</ul>
+<blockquote>
+<p>zipcode_data =  requests.get(f&quot;{DEPLOYED_API_BASE_URL}/data&quot;, params=params).json() </p>
+</blockquote>
+<p>It is worth noting that if you're running the API locally on your machine, then you can replace <code>DEPLOYED_API_BASE_URL</code> with <code>LOCAL_API_BASE_URL</code></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="about"><a class="header" href="#about">/about</a></h1>
+<p><strong>Note</strong>: Due to pivoting to <a href="https://retool.com">retool</a> for frontend development, this page will no longer being worked on</p>
+<h2 id="screenshot-1"><a class="header" href="#screenshot-1">Screenshot:</a></h2>
+<p><img src="https://user-images.githubusercontent.com/97417536/229576253-958518a8-5c27-4e70-9ff6-760a7923268f.png" alt="About Page Skeleton" /></p>
+<p>When 'about' is clicked on the client, flask triggers a function called <code>about()</code> in <code>app.py</code>, which would then render the HTML code in
+<code>templates/about.jinja</code>.</p>
+<ul>
+<li>
+<p><code>app.py</code></p>
+<pre><code class="language-py">@app.route(&quot;/about&quot;)
+def about():
+    return render_template(&quot;about.jinja&quot;)
+</code></pre>
+</li>
+<li>
+<p><code>templates/about.jinja</code>:</p>
+<p>Notice how this page contains the navigation bar and footer due to being an extension of <code>template.jinja</code> </p>
+<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ url_for('static', filename='css/about.css') }}&quot;&gt;
+
+{% extends &quot;layout.jinja&quot; %}
+{% block about %}
+
+&lt;section class=&quot;about-body&quot;&gt;
+  &lt;h1&gt; Empty About Page&lt;/h1&gt;
+&lt;/section&gt;
+
+{% endblock %}
+</code></pre>
+</li>
+<li>
+<p>The CSS declarations in <code>static/about.css</code> are applied on this route</p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="accessing-repositories"><a class="header" href="#accessing-repositories">Accessing repositories</a></h1>
+<p>The repositories pertainig to this project are all under the github organization. See <a href="support/../introduction.html#github">here</a> for relevant links.</p>
+<p>The process for accessing and contributong to these repositories is very straightforward. </p>
+<ol>
+<li>
+<p>Go to the repository you wish to contribute to.</p>
+</li>
+<li>
+<p>Copy the repository link
+<img src="https://i.imgur.com/8YffvCV.png" alt="image" /></p>
+</li>
+<li>
+<p>In your terminal, execute </p>
+<pre><code class="language-bash">git clone &lt;repo_url&gt;
+cd &lt;repo_name&gt;
+</code></pre>
+</li>
+</ol>
+<p>As an example, let's clone the repository that holds the markdown files for this website:</p>
+<ol>
+<li>
+<p>Get the url from <a href="https://github.com/Cool-Corridors/cool-corridors.github.io">GitHub</a>. Use the above image for assistance.</p>
+</li>
+<li>
+<p>Enter a terminal and git clone. </p>
+<pre><code class="language-bash">git clone https://github.com/Cool-Corridors/cool-corridors.github.io.git
+cd cool-corridors.github.io
+</code></pre>
+</li>
+</ol>
+<p>You can now make whatever changes you want and then commit back to this repository. Best practice is to create a branch for new features, and then merge them back into the main branch through a pull request. For more information about git, check out their <a href="https://git-scm.com/docs">docs</a> or just google it.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="creating-a-new-api-endpoint"><a class="header" href="#creating-a-new-api-endpoint">Creating a new API endpoint</a></h2>
+<p>All endpoints are defined inside <code>./src/app.py</code>. To create a new endpoint, simply create a new function and add a new route to the <code>api</code> object. </p>
+<ol>
+<li>
+<p>Navigate to <code>./src/app.py</code>.</p>
+</li>
+<li>
+<p>Define a new route (name and methods) through the following syntax:</p>
+<pre><code class="language-py">@api.route(&quot;/test&quot;, methods=[GET,POST])
+def test():
+    return &quot;Hello World!&quot;
+</code></pre>
+<p><span class="caption"> An example endpoint called &quot;test&quot; that takes methods <code>GET</code> and <code>POST</code></span></p>
+<p>The above code will create an endpoint called <code>test</code> such that when accessed will show <code>&quot;Hello World!&quot;</code>.</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>NOTE</strong></p>
+<p>The function name can be anything, but it is recommended to keep it
+consistent with the endpoint name.</p>
+</blockquote>
+<ol start="3">
+<li>
+<p>Define logic for endpoint.</p>
+<ul>
+<li>Inside the function body, you can access the query string provided through the <code>request.args.get(&quot;&lt;query name&gt;&quot;)</code></li>
+<li>Handle errors, do computations, etc... </li>
+</ul>
+<p>Flask offers many different ways to return data. For more information, see the <a href="https://flask.palletsprojects.com/en/2.2.x/quickstart/">Flask documentation</a>. </p>
+<p>You can:</p>
+<ul>
+<li>return a string literal</li>
+<li>return a json object</li>
+<li>render a template (html file)</li>
+<li>redirect to a different route or url</li>
+<li>return a file</li>
+<li>etc...</li>
+</ul>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="helper-functions"><a class="header" href="#helper-functions">Helper Functions</a></h1>
+<p>There are a few helper functions that are used throughout the codebase. These functions are defined in <code>/src/helpers.py</code>.</p>
+<p>It is recommended to  define <strong>new endpoints</strong> in <code>/src/app.py</code>, and define any <strong>helper functions</strong> in <code>/src/helpers.py</code> to keep the codebase organized.</p>
+<p>Our main helper function is <code>get_info()</code>. This function takes no input, but returns the same json object that the <code>/data</code> endpoint returns. Every other endpoints data is just taken from this larger json object.</p>
+<p>The function does the following:</p>
+<ol>
+<li>
+<p>Obtain <code>zip_code</code> and <code>api_key</code></p>
+<p>Query strings are accessed through the flask <code>request</code> object.</p>
+<pre><code class="language-py">zipcode = request.args.get(&quot;zipcode&quot;)
+read_key = request.args.get(&quot;read_key&quot;)
+</code></pre>
+<p><span class="caption">A query string is anything after a <code>?</code> in the url. They have a name, value, and separated by a <code>&amp;</code>. </span></p>
+<p>If the zipcode or read key is not provided, we return an error message. </p>
+</li>
+<li>
+<p>Convert zipcode into lat/long and create binding box.</p>
+<p>To convert a zipcode, we have a lookup table called <code>ZIP_DICT</code>. Access it using <code>lat,lng = ZIP_DICT[zipcode]</code> </p>
+<p>Another helper function is already defined to create the binding box. It returns a tuple of the northeast, northwest, southeast, and southwest coordinates of the box.</p>
+<pre><code class="language-python">nwlat,nwlng,selat,selng = get_binding_box(lat,lng,RANGE)
+</code></pre>
+</li>
+<li>
+<p>Create the url to ping PurpleAir with.</p>
+<p>To provide PurpleAir with the bounding box and the many other fields we want, we use the <code>requests.get()</code> function from the requests library. The function allows us to pass an url and a dictionary of query parameters. </p>
+<p>There is a helper function to create the params dictionary for you, but it may be removed due to redundancy. My suggestion is to use the following code blocks as a guide.</p>
+<pre><code class="language-py"># base url
+url = &quot;https://www.api.purpleair.com/v1/sensors/&quot;
+# dictionary of parameters we want to access
+params = {
+    &quot;fields&quot;: &quot;sensor_index,latitude,longitude,temperature,IAQI&quot;,
+    &quot;key&quot;: read_key,
+    &quot;nwlat&quot;: nwlat,
+    &quot;nwlng&quot;: nwlng,
+    &quot;selat&quot;: selat,
+    &quot;selng&quot;: selng,
+}
+response = requests.get(url, params=params)
+</code></pre>
+<blockquote>
+<p><strong>NOTE</strong></p>
+<p>If we are to move away from using purpleair as our data source, we can simply change the url and the contents of the <code>params</code> dictionary.</p>
+</blockquote>
+</li>
+<li>
+<p>Create the dictionary of data to be returned.</p>
+<p>A dictionary named <code>scores</code> is created and the data to be returned is inserted. This is what the function ultimately returns to the end user.</p>
+</li>
+</ol>
+<p>If no sensors are found, we return an error message. Otherwise, we take the returned sensor data and format it accordingly to be returned.</p>
+<p>To send data back as a json object, we use the <code>jsonify()</code> function from the flask library. </p>
+<pre><code class="language-py">@api.route(&quot;/example&quot;)
+def example():
+    return jsonify({
+        &quot;IAQI&quot;: IAQI,
+        &quot;zipcode&quot;: zipcode
+    })
+</code></pre>
+<h2 id="creating-a-new-helper-function"><a class="header" href="#creating-a-new-helper-function">Creating a new helper function</a></h2>
+<ol>
+<li>
+<p>Navigate to <code>./src/helpers.py</code>.</p>
+</li>
+<li>
+<p>Define a new function which (ideally) is a refactoring of code that would otherwise be put in <code>./src/app.py</code>.</p>
+<p>For example, we defined a function to ping the PurpleAir API, converting zipcodes to their coordinates and creating bounding boxes for those coordinates. The logic of our API has been factored out into <code>./src/helpers.py</code>. We use these functions for simplicity and keeping the main <code>./src/app.py</code> clean.</p>
+</li>
+<li>
+<p>Use function in <code>./src/app.py</code>.</p>
+<p>All functions defined within <code>./src/helpers.py</code> are imported into <code>./src/app.py</code> for you. There is no need to import the function manually. Use as necessary.</p>
+</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployment"><a class="header" href="#deployment">Deployment</a></h1>
+<h2 id="1-creating-an-account"><a class="header" href="#1-creating-an-account">1. Creating an account:</a></h2>
+<p>In order to use the API from anywhere on any machine, one would need to deploy the API to a hosting service. The hosting service we picked is <a href="https://render.com">render</a>. </p>
+<p>(if an account has not already been created) When signing up for an account, make sure to do so using the GitHub account which owns the repository containing the code you'd like to deploy. This is to make it convenient for quickly selecting repositories on your GitHub account direcly from within <a href="https://render.com">render</a>.</p>
+<h2 id="2-creating-a-new-service"><a class="header" href="#2-creating-a-new-service">2. Creating a new service:</a></h2>
+<ol>
+<li>After logging in, click the 'new +' button near the profile icon and select webservice. Selecting webservice allows us to deploy applications that will be serving data to its users. Please check out the <a href="https://render.com/docs/web-services">Web Services documentation</a> on render.</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/97417536/227998672-545b6d4c-d7a5-4f14-b137-43d182c32331.png" alt="image" /></p>
+<ol start="2">
+<li>Select the GitHub repository containing the code you'd like to deploy. In this case, it will be <code>cool-corridors-API</code></li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/97417536/228000965-951b5bcb-3af5-420a-a80e-abf0fc992b9d.png" alt="image" /></p>
+<ol start="3">
+<li>You will now be greeted with this menu to fill out:</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/97417536/228002777-a42f487c-812e-4986-a030-c91679dfcb48.png" alt="image" /></p>
+<p>Here's what each field mean, feel free to also checkout the <a href="https://render.com/docs/web-services#deploy-your-own-code">documentation</a>:</p>
+<ul>
+<li><code>Name</code>: A name for your Web Service</li>
+<li><code>Runtime</code>: The programming language of your code, which is Python. </li>
+<li><code>Region</code>: The <a href="https://render.com/docs/regions">geographic region</a> to deploy to</li>
+<li><code>Branch</code>: The git branch to build. At the moment, the branch used is <code>gunicorn-testing</code></li>
+<li><code>Root directory</code>: The directory which the application is ran from. Keep this as default because the root directory contains a file named <code>run.py</code> which is responsble for running the code in <code>/src</code></li>
+<li><code>Build Command</code>: The command to build your Web Service. Because all the API dependencies of the project are in <code>requirements.txt</code>, set this field to <code>pip install -r requirements.txt</code>. If new packages/dependencies are later on added to the project, run <code>pip freeze &gt; requirements.txt</code> within the project root directory to get an up to date <code>requirements.txt</code> file.</li>
+<li><code>Start Command</code>: The command to start your Web Service. The command is <code>gunicorn run:app</code> where <code>app.py</code> is in the root directory of the repository. We decided to use <a href="https://gunicorn.org/">gunicorn</a> because it can make the application handle more requests per second. More on this is elaborated below. </li>
+</ul>
+<h3 id="why-use-gunicorn"><a class="header" href="#why-use-gunicorn">Why use gunicorn?</a></h3>
+<p>Flask is a light weight framework great for developing applications locally on your machine. However, flask on its own can only handle one request at a time in sequential order, making it less ideal for deployment into production. </p>
+<p>Turns out that its best practice to run flask code using <a href="https://gunicorn.org/">gunicorn</a>. 
+This is because gunicorn uses a <a href="https://docs.gunicorn.org/en/stable/design.html">pre-fork model</a> which has 
+multiple processes called &quot;workers&quot; that can indidivually handle API requests. These processes are handled by a &quot;Master Process&quot; that manages the number of running workers based on how many API requests are made at a given time. 
+The result is that we have a faster application that can handle multiple requests at the same time as opposed to just one at a time. </p>
+<p><a href="https://blog.ironboundsoftware.com/2016/06/27/faster-flask-need-gunicorn/">article</a></p>
+<h2 id="plan"><a class="header" href="#plan">Plan</a></h2>
+<p>Scrolling further down from <code>Start Command</code>, you can select the plan to host the API with. You can specify the amount of RAM and how many CPUs your Web Service requires. We selected the free plan for now, but higher tiers can handle more traffic load.</p>
+<p><img src="https://user-images.githubusercontent.com/97417536/228021569-ada52763-f00f-4b4f-a22c-e9549d925dae.png" alt="image" /></p>
+<h2 id="advanced"><a class="header" href="#advanced">Advanced:</a></h2>
+<p>Within <code>Advanced</code>, you may also specify environment variables, secrets, persistent disk, health check path, and whether or not to auto deploy on every git push.</p>
+<p><img src="https://user-images.githubusercontent.com/97417536/228029117-93da1d34-41e4-4569-9381-fea5f443030a.png" alt="image" /></p>
+<p>For this section, we need to do two things:</p>
+<ol>
+<li>Add an environment variable to specifiy the Python version for render to use for deployment. </li>
+</ol>
+<pre><code>Key: PYTHON_VERSION
+Value: 3.9.10
+</code></pre>
+<p><img src="https://user-images.githubusercontent.com/97417536/228029988-7ef15efa-2c03-4915-b5ac-45c082ccdc8f.png" alt="image" /></p>
+<ol start="2">
+<li>Add a <code>.env</code> file containing PurpleAir API read and write keys. Conventionally, <code>.env</code> is added to the <code>.gitignore</code> of project repositories in order to keep senstitive information needed to run the API hidden and safe. However, there's no way for render to have access for this file unless we explicitly specify it here:</li>
+</ol>
+<p><img src="https://user-images.githubusercontent.com/97417536/228032291-aa7e0043-bc7d-49a2-8ece-4b59b76d33bb.png" alt="image" /></p>
+<ul>
+<li>
+<p>Filename: <code>.env</code></p>
+</li>
+<li>
+<p>contents: </p>
+<pre><code class="language-ini">Make sure to have the keys enclosed in quotiation marks
+
+READ_KEY = &quot;INSERT_READ_KEY_HERE&quot;
+WRITE_KEY = &quot;INSERT_WRITE_KEY_HERE&quot;
+</code></pre>
+</li>
+</ul>
+<p><strong>Once all of this has been set, click the Create Web Service button all the way at the bottom:</strong></p>
+<p><img src="https://user-images.githubusercontent.com/97417536/228036086-da582277-8da2-4405-983d-41f64e7298f6.png" alt="image" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
